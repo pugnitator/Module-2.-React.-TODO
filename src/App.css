@@ -1,17 +1,19 @@
 * {
   color: #282a2e;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 h1 {
   text-align: center;
   color: #282a2e;
+  line-height: 1;
 }
 
 header {
-  display: flex;
   margin: auto;
   padding: 10px;
   min-width: 500px;
-  justify-content: space-around;
-  background-color: #c670ff;
+  align-content: center;
+  background-color: #B99BFF;
 }
