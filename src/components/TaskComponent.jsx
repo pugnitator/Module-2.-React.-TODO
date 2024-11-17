@@ -1,18 +1,24 @@
 import { React, useState } from "react";
 import { styled } from 'styled-components';
 
-export function Task({id, title}) {
+export function Task(props) {
+    const {id, title, onDeleteTask} = props;
     const [isEdited, setIsEdited] = useState(true)
-    const onClick = () => {
+
+    const onEditClick = () => {
         setIsEdited(false);
+    }
+    const onDeleteClick = () => {
+        console.log('onDeleteClick');
+        onDeleteTask(id);
     }
 
     return (
         <ListItem>
             <TaskInput type='text' value={`${id}. ${title}`} disabled={isEdited}/>
             <TaskButtons>
-                <Button id={'edit'} onClick={onClick}>Изменить</Button>
-                <Button id={'delete'} >Удалить</Button>
+                <Button id={'edit'} onClick={onEditClick}>Изменить</Button>
+                <Button id={'delete'} onClick={() => onDeleteClick()}>Удалить</Button>
             </TaskButtons>
         </ListItem>
     )
