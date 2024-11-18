@@ -29,7 +29,7 @@ export function App() {
   };
 
   async function onDeleteTask(taskId) {
-    console.log(taskId)
+    console.log(taskId);
     try {
       const rawResponse = await fetch(`http://localhost:3004/todos/${taskId}`, {
         method: "DELETE",
@@ -37,10 +37,32 @@ export function App() {
       const response = await rawResponse.json();
       console.log(response);
       updateList();
-    } catch (error) {return error;}
+    } catch (error) {
+      return error;
+    }
   }
 
-  const onEditeTask = () => {};
+  async function onSaveEditedTask(taskId, taskTitle) {
+    const task = {
+      id: taskId,
+      title: taskTitle,
+      complited: false,
+    };
+
+    try {
+      const rawResponse = await fetch(`http://localhost:3004/todos/${taskId}`, {
+        method: "PUT",
+        body: JSON.stringify(task),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+      const response = await rawResponse.json();
+      console.log(response);
+    } catch (error) {
+      return error;
+    }
+  }
 
   useEffect(() => {
     updateList();
@@ -56,6 +78,7 @@ export function App() {
             id={item.id}
             title={item.title}
             onDeleteTask={onDeleteTask}
+            onSaveEditedTask={onSaveEditedTask}
           />
         ))}
       </List>
@@ -77,9 +100,9 @@ const List = styled.ul`
 async function getTasksList() {
   let result;
   try {
-    const response = await fetch("http://localhost:3004/todos")
-    result = await response.json()
-  } catch(error) {
+    const response = await fetch("http://localhost:3004/todos");
+    result = await response.json();
+  } catch (error) {
     result = error;
   }
   return result;
