@@ -3,6 +3,7 @@ import { React, useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { Task } from "./components/TaskComponent.jsx";
 import { Header } from "./components/HeaderComponent.jsx";
+import { SearchBar } from "./components/SearchComponent.jsx";
 
 export function App() {
   const [todosList, setTodoList] = useState([]);
@@ -64,6 +65,15 @@ export function App() {
     }
   }
 
+  const onSearch = (text) => {
+    const searchedTasks = todosList.filter((item) => item.title.includes(text));
+    setTodoList(searchedTasks);
+  }
+
+  const onCancelSearch = () => {
+    updateList();
+  }
+
   useEffect(() => {
     updateList();
   }, []);
@@ -71,6 +81,7 @@ export function App() {
   return (
     <>
       <Header onAddTask={onAddTask} />
+      <SearchBar onSearch={onSearch} onCancelSearch={onCancelSearch}/>
       <List>
         {todosList?.map((item) => (
           <Task
@@ -80,7 +91,8 @@ export function App() {
             onDeleteTask={onDeleteTask}
             onSaveEditedTask={onSaveEditedTask}
           />
-        ))}
+        ))
+        }
       </List>
     </>
   );
