@@ -1,12 +1,12 @@
 * {
-  color: #282a2e;
+  color: #3a2c5a;
   margin: 0;
   box-sizing: border-box;
 }
 
 h1 {
   text-align: center;
-  color: #282a2e;
+  color: white;
   line-height: 1;
 }
 
@@ -15,9 +15,16 @@ header {
   padding: 10px;
   min-width: 500px;
   align-content: center;
-  background-color: #B99BFF;
+  background-color: #9F86DB;
 }
 
 input {
   font-size: 14px;
+    border: 2px solid #d2c3ff;
+  border-radius: 2px;
+  &:focus{
+    outline: none;
+    border: 2px solid #9a84d0;
+    border-radius: 2px;
+  }
 }

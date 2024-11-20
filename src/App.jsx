@@ -7,6 +7,7 @@ import { SearchBar } from "./components/SearchComponent.jsx";
 
 export function App() {
   const [todosList, setTodoList] = useState([]);
+  const [isSorted, setIsSorted] = useState(false)
   const updateList = () => getTasksList().then(setTodoList);
 
   const onAddTask = () => {
@@ -74,6 +75,17 @@ export function App() {
     updateList();
   }
 
+  const onSortByTitle = () => {
+    if (!isSorted) {
+      const sortList = todosList.sort((a, b) => a.title > b.title ? 1 : -1);
+      setIsSorted(true);
+      setTodoList(sortList);
+    } else {
+      updateList();
+      setIsSorted(false);
+    }
+  }
+
   useEffect(() => {
     updateList();
   }, []);
@@ -81,7 +93,7 @@ export function App() {
   return (
     <>
       <Header onAddTask={onAddTask} />
-      <SearchBar onSearch={onSearch} onCancelSearch={onCancelSearch}/>
+      <SearchBar onSearch={onSearch} onCancelSearch={onCancelSearch} onSortByTitle={onSortByTitle} isSorted={isSorted}/>
       <List>
         {todosList?.map((item) => (
           <Task

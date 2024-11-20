@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import { AddTaskButton } from "./AddTaskButtonComponent"
+import { palette } from "../colors"; 
 
 export function Header(props) {
   const { onAddTask } = props;
@@ -20,5 +21,5 @@ const HeaderItemsConteiner = styled.div`
   min-width: 500px;
   justify-content: space-between;
   align-items: baseline;
-  background-color: #b99bff;
+  background-color: ${palette.headerBackground};
 `;

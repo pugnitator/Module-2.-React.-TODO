@@ -1,9 +1,10 @@
-import { styled } from 'styled-components'
+import { styled } from 'styled-components';
+import { palette } from "../colors"; 
 
 export function AddTaskButton(props) {
     const { onClick } = props;
     return (
-        <AddButton onClick={onClick}>Новая задача</AddButton>
+        <AddButton onClick={onClick}>+ Новая задача</AddButton>
     )
 }
 
@@ -11,12 +12,13 @@ const AddButton = styled.button`
   margin: 0;
   padding: 10px;
   align-self: center;
-  background-color: white;
-  border: 2px solid #282a2e;
-  border-radius: 3px;
+  color: white;
   font-size: 16px;
-  font-weight: bold;
+  background-color: ${palette.headerBackground};
+  border: 3px solid white;
+  border-radius: 3px;
+
   &:hover {
-    background-color: #60DB8B;
+    background-color: #AB8FEB;
   }
 `
