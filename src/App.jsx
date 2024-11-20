@@ -5,6 +5,12 @@ import { Task } from "./components/TaskComponent.jsx";
 import { Header } from "./components/HeaderComponent.jsx";
 import { SearchBar } from "./components/SearchComponent.jsx";
 
+/*TODO:
+1. debouns
+2. firebase
+3. why two GET requests in a row
+*/
+
 export function App() {
   const [todosList, setTodoList] = useState([]);
   const [isSorted, setIsSorted] = useState(false)
