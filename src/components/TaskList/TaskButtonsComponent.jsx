@@ -1,16 +1,17 @@
 import { styled } from "styled-components";
 import { palette } from "../../colors";
+import { useTodoList } from '../UseTodoList';
 
 export function TaskButtons(props) {
-  const { onEditClick, onDeleteClick, onSaveClick, onCancelClick, isEdited } = props;
-  // const { onEditClick, onDeleteClick, onSaveClick, onCancelClick, isEdited } = useTodoList();
+  const { deleteTask } = useTodoList()
+  const { onEditClick, onSaveClick, onCancelClick, isEdited } = props;
 
   return (
     <TaskButtonsContainer>
       <Button id={"edit"} onClick={onEditClick} isHidden={isEdited}>
         Изменить
       </Button>
-      <Button id={"delete"} onClick={onDeleteClick} isHidden={isEdited}>
+      <Button id={"delete"} onClick={deleteTask} isHidden={isEdited}>
         Удалить
       </Button>
       <Button id={"save"} onClick={onSaveClick} isHidden={!isEdited}>

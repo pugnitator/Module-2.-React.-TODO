@@ -7,7 +7,7 @@ import { useTodoList } from '../UseTodoList';
 
 export function Task(props) {
   const { id, title } = props;
-  const { deleteTask, saveEditedTask } = useTodoList();
+  const { saveEditedTask } = useTodoList();
 
   const [isEdited, setIsEdited] = useState(false);
   const [inputValue, setInputValue] = useState(title);
@@ -33,12 +33,6 @@ export function Task(props) {
     setIsEdited(false);
   };
 
-  const onDeleteClick = () => {
-    console.log("onDeleteClick");
-    deleteTask(id);
-  };
-
-
   return (
     <ListItem>
       <TaskInfo>
@@ -53,7 +47,6 @@ export function Task(props) {
       </TaskInfo>
       <TaskButtons 
         onEditClick={onEditClick} 
-        onDeleteClick={onDeleteClick} 
         onSaveClick={onSaveClick} 
         onCancelClick={onCancelClick} 
         isEdited={isEdited}
