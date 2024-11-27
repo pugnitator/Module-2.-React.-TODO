@@ -1,10 +1,13 @@
 import { React, useState, useRef, useEffect } from "react";
 import { styled } from "styled-components";
-import { palette } from "../colors"; 
+import { palette } from "../../colors"; 
 import { TaskButtons } from "./TaskButtonsComponent";
+import { useTodoList } from '../UseTodoList';
+
 
 export function Task(props) {
-  const { id, title, onDeleteTask, onSaveEditedTask } = props;
+  const { id, title } = props;
+  const { deleteTask, saveEditedTask } = useTodoList();
 
   const [isEdited, setIsEdited] = useState(false);
   const [inputValue, setInputValue] = useState(title);
@@ -26,13 +29,13 @@ export function Task(props) {
 
   const onSaveClick = () => {
     console.log("onSaveClick");
-    onSaveEditedTask(id, inputValue);
+    saveEditedTask(id, inputValue);
     setIsEdited(false);
   };
 
   const onDeleteClick = () => {
     console.log("onDeleteClick");
-    onDeleteTask(id);
+    deleteTask(id);
   };
 
 

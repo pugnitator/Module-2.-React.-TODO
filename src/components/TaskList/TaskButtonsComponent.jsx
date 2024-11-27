@@ -1,8 +1,9 @@
 import { styled } from "styled-components";
-import { palette } from "../colors";
+import { palette } from "../../colors";
 
 export function TaskButtons(props) {
   const { onEditClick, onDeleteClick, onSaveClick, onCancelClick, isEdited } = props;
+  // const { onEditClick, onDeleteClick, onSaveClick, onCancelClick, isEdited } = useTodoList();
 
   return (
     <TaskButtonsContainer>

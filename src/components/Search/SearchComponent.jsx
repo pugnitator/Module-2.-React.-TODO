@@ -2,28 +2,31 @@ import { React, useRef, useState } from "react";
 import { styled } from "styled-components";
 import SearchImg from "./SearchImg.svg";
 import SortArrowImg from "./SortArrowImg.svg";
+import { useTodoList } from '../UseTodoList';
 
-export function SearchBar(props) {
-  const {onSearch, onCancelSearch, onSortByTitle, isSorted} = props;
+//Тут тоже вынести в хук?
+
+export function SearchBar() {
+  const {searchTask, cancelSearchTask, sortTasksByTitle, isSorted} = useTodoList();
   const [isSearch, setIsSearch] = useState(false)
   const input = useRef()
 
   const onClickSearch = () => {
     if (input.current.value) {
       setIsSearch(true);
-      onSearch(input.current.value)
+      searchTask(input.current.value)
     }
   };
 
   const onClickCenceled = () => {
-    if(isSearch) onCancelSearch();
+    if(isSearch) cancelSearchTask();
     input.current.value = '';
     setIsSearch(false);
   }
 
   const onClicSortByTitle = () => {
     console.log(isSorted);
-    onSortByTitle();
+    sortTasksByTitle();
   }
 
   return (
@@ -39,7 +42,7 @@ export function SearchBar(props) {
     <SearchBarConteiner>
       <Button id='sort' onClick={onClicSortByTitle}>
         А-Я
-        <SortImg src={SortArrowImg} alt='sorting' isSorted={isSorted  }/>
+        <SortImg src={SortArrowImg} alt='sorting' isSorted={isSorted}/>
       </Button>
       <SearchInput ref={input} placeholder="Поиск..."/>
       <Button onClick={onClickSearch}>

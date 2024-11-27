@@ -1,14 +1,14 @@
 import { styled } from "styled-components";
 import { AddTaskButton } from "./AddTaskButtonComponent"
-import { palette } from "../colors"; 
+import { palette } from "../../colors"; 
 
-export function Header(props) {
-  const { onAddTask } = props;
+
+export function Header() {
   return (
     <header>
       <HeaderItemsConteiner>
         <h1>Список задач</h1>
-        <AddTaskButton onClick={onAddTask} />
+        <AddTaskButton />
       </HeaderItemsConteiner>
     </header>
   );

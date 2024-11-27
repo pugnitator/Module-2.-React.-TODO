@@ -1,10 +1,11 @@
 import { styled } from 'styled-components';
-import { palette } from "../colors"; 
+import { palette } from "../../colors"; 
+import { useTodoList } from '../UseTodoList';
 
-export function AddTaskButton(props) {
-    const { onClick } = props;
+export function AddTaskButton() {
+    const { addTask } = useTodoList();
     return (
-        <AddButton onClick={onClick}>+ Новая задача</AddButton>
+        <AddButton onClick={addTask}>+ Новая задача</AddButton>
     )
 }
 
