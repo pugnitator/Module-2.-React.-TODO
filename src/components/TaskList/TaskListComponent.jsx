@@ -1,14 +1,17 @@
 import { styled } from "styled-components";
 import { Task } from "./TaskComponent.jsx";
-import { useTodoList } from '../UseTodoList';
+import { useContext } from 'react';
+import { TodoListContext } from '../../todoListContext';
 
 export function TaskList() {
-  const { taskList } = useTodoList();
+  const todoListStore = useContext(TodoListContext)
+  console.log(todoListStore.taskList);
 
   return (
     <List>
-      {taskList?.map((item) => (
-        <Task
+      {todoListStore.taskList?.map((item) => (
+        <Task 
+          task={item}
           key={item.id}
           id={item.id}
           title={item.title}

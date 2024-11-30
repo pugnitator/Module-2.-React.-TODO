@@ -1,37 +1,43 @@
 import { useState, useEffect } from "react";
+import { getTasksList } from "../APIs/getTaskList";
+import { addTaskToServer } from "../APIs/addTaskToServer";
+import { deleteTaskFromServer } from "../APIs/deleteTaskFromServer";
+import { editTaskOnServer } from "../APIs/editTaskOnServer";
 
 export const useTodoList = () => {
   const [taskList, setTaskList] = useState([]);
   const [isSorted, setIsSorted] = useState(false);
-  const updateList = async () => {
-    console.log("update");
-    return getTasksList().then((res) => {
-      console.log(res);
-      setTaskList(res);
-    });
-  };
+
+  let listBeforeSort = [...taskList];
 
   useEffect(() => {
-    updateList();
+    console.log(taskList.length);
+    getTasksList().then(setTaskList);
   }, []);
+
+  useEffect(() => {
+    console.log("taskList обновился:", taskList);
+  }, [taskList]);
 
   const searchTask = (text) => {
     const searchedTasks = taskList.filter((item) => item.title.includes(text));
     setTaskList(searchedTasks);
   };
 
-  const cancelSearchTask = () => {
-    updateList();
+  const cancelSearchTask = async () => {
+    getTasksList().then(setTaskList);
   };
 
-  const sortTasksByTitle = () => {
+  const sortTasksByTitle = async () => {
     if (!isSorted) {
-      const sortList = taskList.sort((a, b) => (a.title > b.title ? 1 : -1));
+      const sortList = [...taskList].sort((a, b) =>
+        a.title > b.title ? 1 : -1
+      );
       setIsSorted(true);
       setTaskList(sortList);
     } else {
-      updateList();
       setIsSorted(false);
+      setTaskList(listBeforeSort);
     }
   };
 
@@ -44,40 +50,23 @@ export const useTodoList = () => {
           title: taskTitle,
           complited: false,
         };
-
-        const rawResponse = await fetch("http://localhost:3004/todos", {
-          method: "POST",
-          body: JSON.stringify(task),
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-          },
-        });
-
-        const response = await rawResponse.json();
-        console.log(response);
-        await updateList();
+        const isSuccess = await addTaskToServer(task);
+        if (isSuccess) setTaskList([...taskList, task]);
       } catch (error) {
         console.log("ne ok", error);
       }
     }
   }
 
-  async function deleteTask(taskId) {
-    console.log("task id", taskId);
+  async function deleteTask(task, taskId) {
     try {
-      const rawResponse = await fetch(
-        `http://localhost:3004/todos/${+taskId}`,
-        {
-          method: "DELETE",
-        }
-      );
-      // const response = await rawResponse.json();
-      console.log(rawResponse);
-      await updateList();
-      console.log(taskList);
+      const isSuccess = await deleteTaskFromServer(taskId);
+      if (isSuccess) {
+        // const deleteTaskIndex = taskList.indexOf(task);
+        setTaskList(taskList.filter(task => task.id !== taskId));
+      }
     } catch (error) {
       console.log("ошибка удаления", error);
-      return error;
     }
   }
 
@@ -89,29 +78,10 @@ export const useTodoList = () => {
     };
 
     try {
-      const rawResponse = await fetch(`http://localhost:3004/todos/${taskId}`, {
-        method: "PUT",
-        body: JSON.stringify(task),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      });
-      const response = await rawResponse.json();
-      console.log(response);
+      await editTaskOnServer(task, taskId);
     } catch (error) {
-      return error;
+      console.log(error)
     }
-  }
-
-  async function getTasksList() {
-    let result;
-    try {
-      const response = await fetch("http://localhost:3004/todos");
-      result = await response.json();
-    } catch (error) {
-      result = error;
-    }
-    return result;
   }
 
   return {

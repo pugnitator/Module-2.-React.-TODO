@@ -1,11 +1,14 @@
 import { styled } from 'styled-components';
 import { palette } from "../../colors"; 
 import { useTodoList } from '../UseTodoList';
+import { useContext } from 'react';
+import { TodoListContext } from '../../todoListContext';
 
 export function AddTaskButton() {
-    const { addTask } = useTodoList();
+  const todoListStore = useContext(TodoListContext)
+    // const { addTask } = useTodoList();
     return (
-        <AddButton onClick={addTask}>+ Новая задача</AddButton>
+        <AddButton onClick={todoListStore.addTask}>+ Новая задача</AddButton>
     )
 }
 

@@ -2,12 +2,13 @@ import { React, useState, useRef, useEffect } from "react";
 import { styled } from "styled-components";
 import { palette } from "../../colors"; 
 import { TaskButtons } from "./TaskButtonsComponent";
-import { useTodoList } from '../UseTodoList';
+import { useContext } from 'react';
+import { TodoListContext } from '../../todoListContext';
 
 
 export function Task(props) {
-  const { id, title } = props;
-  const { saveEditedTask } = useTodoList();
+  const { task, id, title} = props;
+  const todoListStore = useContext(TodoListContext)
 
   const [isEdited, setIsEdited] = useState(false);
   const [inputValue, setInputValue] = useState(title);
@@ -25,11 +26,16 @@ export function Task(props) {
 
   const onCancelClick = () => {
     setIsEdited(false);
+    setInputValue(title);
   };
 
+  const onDelete = () => {
+    todoListStore.deleteTask(task, id);
+    console.log('Удалили')
+  }
+
   const onSaveClick = () => {
-    console.log("onSaveClick");
-    saveEditedTask(id, inputValue);
+    todoListStore.saveEditedTask(id, inputValue);
     setIsEdited(false);
   };
 
@@ -45,7 +51,8 @@ export function Task(props) {
         />
         <Id>{`id: ${id}`}</Id>
       </TaskInfo>
-      <TaskButtons 
+      <TaskButtons
+        onDelete={onDelete}
         onEditClick={onEditClick} 
         onSaveClick={onSaveClick} 
         onCancelClick={onCancelClick} 
