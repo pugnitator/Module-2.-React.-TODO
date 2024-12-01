@@ -1,6 +1,5 @@
 import { styled } from 'styled-components';
 import { palette } from "../../colors"; 
-import { useTodoList } from '../UseTodoList';
 import { useContext } from 'react';
 import { TodoListContext } from '../../todoListContext';
 

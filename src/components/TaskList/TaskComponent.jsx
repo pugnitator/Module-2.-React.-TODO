@@ -7,7 +7,7 @@ import { TodoListContext } from '../../todoListContext';
 
 
 export function Task(props) {
-  const { task, id, title} = props;
+  const { id, title} = props;
   const todoListStore = useContext(TodoListContext)
 
   const [isEdited, setIsEdited] = useState(false);
@@ -30,7 +30,7 @@ export function Task(props) {
   };
 
   const onDelete = () => {
-    todoListStore.deleteTask(task, id);
+    todoListStore.deleteTask(id);
     console.log('Удалили')
   }
 

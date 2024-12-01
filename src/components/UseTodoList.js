@@ -5,40 +5,29 @@ import { deleteTaskFromServer } from "../APIs/deleteTaskFromServer";
 import { editTaskOnServer } from "../APIs/editTaskOnServer";
 
 export const useTodoList = () => {
+  const [search, setSearch] = useState('')
   const [taskList, setTaskList] = useState([]);
   const [isSorted, setIsSorted] = useState(false);
 
-  let listBeforeSort = [...taskList];
-
   useEffect(() => {
-    console.log(taskList.length);
     getTasksList().then(setTaskList);
   }, []);
 
-  useEffect(() => {
-    console.log("taskList обновился:", taskList);
-  }, [taskList]);
-
   const searchTask = (text) => {
-    const searchedTasks = taskList.filter((item) => item.title.includes(text));
-    setTaskList(searchedTasks);
+    setSearch(text.toLowerCase());
   };
 
-  const cancelSearchTask = async () => {
-    getTasksList().then(setTaskList);
+  const cancelSearchTask = () => {
+    setSearch(false);
   };
 
-  const sortTasksByTitle = async () => {
-    if (!isSorted) {
-      const sortList = [...taskList].sort((a, b) =>
-        a.title > b.title ? 1 : -1
-      );
-      setIsSorted(true);
-      setTaskList(sortList);
-    } else {
-      setIsSorted(false);
-      setTaskList(listBeforeSort);
-    }
+  const applyFilters = () => {
+    const searchedList = search? taskList.filter((item) => item.title.toLowerCase().includes(search)) : taskList
+    return isSorted? [...searchedList].sort((a, b) => a.title > b.title ? 1 : -1) : searchedList
+  }
+
+  const sortTasksByTitle = () => {
+    setIsSorted(!isSorted)
   };
 
   async function addTask() {
@@ -46,7 +35,7 @@ export const useTodoList = () => {
     if (taskTitle) {
       try {
         const task = {
-          id: Date.now(),
+          id: Date.now().toString(),
           title: taskTitle,
           complited: false,
         };
@@ -58,11 +47,10 @@ export const useTodoList = () => {
     }
   }
 
-  async function deleteTask(task, taskId) {
+  async function deleteTask(taskId) {
     try {
       const isSuccess = await deleteTaskFromServer(taskId);
       if (isSuccess) {
-        // const deleteTaskIndex = taskList.indexOf(task);
         setTaskList(taskList.filter(task => task.id !== taskId));
       }
     } catch (error) {
@@ -85,7 +73,7 @@ export const useTodoList = () => {
   }
 
   return {
-    taskList,
+    taskList : applyFilters(),
     isSorted,
     setTaskList,
     addTask,

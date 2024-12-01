@@ -2,12 +2,11 @@ import { React, useRef, useState } from "react";
 import { styled } from "styled-components";
 import SearchImg from "./SearchImg.svg";
 import SortArrowImg from "./SortArrowImg.svg";
-import { useTodoList } from '../UseTodoList';
-
-//Тут тоже вынести в хук?
+import { useContext } from 'react';
+import { TodoListContext } from '../../todoListContext';
 
 export function SearchBar() {
-  const {searchTask, cancelSearchTask, sortTasksByTitle, isSorted} = useTodoList();
+  const {searchTask, cancelSearchTask, sortTasksByTitle, isSorted} = useContext(TodoListContext);
   const [isSearch, setIsSearch] = useState(false)
   const input = useRef()
 
@@ -19,13 +18,14 @@ export function SearchBar() {
   };
 
   const onClickCenceled = () => {
+    console.log('Отмена')
     if(isSearch) cancelSearchTask();
     input.current.value = '';
     setIsSearch(false);
   }
 
   const onClicSortByTitle = () => {
-    console.log(isSorted);
+    console.log('isSorted', isSorted);
     sortTasksByTitle();
   }
 

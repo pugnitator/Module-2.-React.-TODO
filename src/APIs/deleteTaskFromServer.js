@@ -3,7 +3,7 @@ export async function deleteTaskFromServer(taskId) {
     if (taskId) {
       try {
         const rawResponse = await fetch(
-            `http://localhost:3004/todos/${+taskId}`,
+            `http://localhost:3004/todos/${taskId}`,
             {
               method: "DELETE",
             }
