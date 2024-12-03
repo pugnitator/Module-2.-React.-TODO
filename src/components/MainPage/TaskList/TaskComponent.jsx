@@ -1,44 +1,12 @@
-import { React, useState, useRef, useEffect } from "react";
+import { React } from "react";
 import { styled } from "styled-components";
 import { palette } from "../../../colors";
-import { TaskButtons } from "./TaskButtonsComponent";
-import { useContext } from "react";
-import { TodoListContext } from "../../../todoListContext";
 import { StyledLink } from "../../../colors";
+import { shortenTitle } from "../../../shortenTitleFun";
 import Open from "./Open.svg";
 
 export function Task(props) {
   const { id, title } = props;
-  const todoListStore = useContext(TodoListContext);
-
-  const [isEdited, setIsEdited] = useState(false);
-  const [inputValue, setInputValue] = useState(title);
-  const taskInputRef = useRef();
-
-  useEffect(() => {
-    if (isEdited && taskInputRef?.current?.disabled === false) {
-      taskInputRef?.current?.focus();
-    }
-  }, [isEdited]);
-
-  const onEditClick = () => {
-    setIsEdited(true);
-  };
-
-  const onCancelClick = () => {
-    setIsEdited(false);
-    setInputValue(title);
-  };
-
-  const onDelete = () => {
-    todoListStore.deleteTask(id);
-    console.log("Удалили");
-  };
-
-  const onSaveClick = () => {
-    todoListStore.saveEditedTask(id, inputValue);
-    setIsEdited(false);
-  };
 
   return (
     <ListItem>
@@ -46,26 +14,9 @@ export function Task(props) {
         <img src={Open} alt="open task" />
       </StyledLink>
       <TaskInfo>
-        <TaskInput
-          type="text"
-          ref={taskInputRef}
-          value={
-            inputValue.length <= MAX_TASK_TITLE_LENGTH
-              ? inputValue
-              : `${inputValue.substring(0, MAX_TASK_TITLE_LENGTH)}...`
-          }
-          disabled={!isEdited}
-          onChange={(e) => setInputValue(e.target.value)}
-        />
+        <h4>{ shortenTitle(title) }</h4>
         <Id>{`id: ${id}`}</Id>
       </TaskInfo>
-      {/* <TaskButtons
-        onDelete={onDelete}
-        onEditClick={onEditClick}
-        onSaveClick={onSaveClick}
-        onCancelClick={onCancelClick}
-        isEdited={isEdited}
-      /> */}
     </ListItem>
   );
 }
@@ -97,10 +48,3 @@ const Id = styled.p`
   font-size: 10px;
   color: #7c69aa;
 `;
-
-const TaskInput = styled.input`
-  background-color: rgba(205, 214, 219, 0);
-  border: none;
-`;
-
-const MAX_TASK_TITLE_LENGTH = 20;

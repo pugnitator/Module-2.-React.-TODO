@@ -16,7 +16,7 @@ export function App() {
         <Routes>
           <Route path='/' element={<MainPage />}/>
           <Route path='/task/:taskId' element={<TaskPage />}/>
-          <Route path='*' element={ErrorPage} />
+          <Route path='*' element={<ErrorPage />} />
         </Routes>
     </TodoListContext.Provider>
   );
