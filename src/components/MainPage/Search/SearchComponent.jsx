@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import SearchImg from "./SearchImg.svg";
 import SortArrowImg from "./SortArrowImg.svg";
 import { useContext } from 'react';
-import { TodoListContext } from '../../todoListContext';
+import { TodoListContext } from "../../../todoListContext";
 
 export function SearchBar() {
   const {searchTask, cancelSearchTask, sortTasksByTitle, isSorted} = useContext(TodoListContext);
