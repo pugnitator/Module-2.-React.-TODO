@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { palette } from "../../colors";
+import { palette } from "../../../colors";
 
 export function TaskButtons(props) {
   const { onDelete, onEditClick, onSaveClick, onCancelClick, isEdited } = props;
@@ -29,11 +29,11 @@ const TaskButtonsContainer = styled.div`
   gap: 3px;
   align-items: center;
   margin: 0;
-  padding: 0;
+  padding: 5px;
   border: none;
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   height: 25px;
   box-sizing: content-box;
   padding: 3px 10px;

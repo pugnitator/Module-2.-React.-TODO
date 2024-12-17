@@ -1,13 +1,16 @@
 import { styled } from "styled-components";
 import { AddTaskButton } from "./AddTaskButtonComponent"
 import { palette } from "../../colors"; 
+import { StyledLink } from "../../colors";
 
 
 export function Header() {
   return (
     <header>
       <HeaderItemsConteiner>
-        <h1>Список задач</h1>
+        <StyledLink to='/'>
+          <h1>Список задач</h1>
+        </StyledLink>
         <AddTaskButton />
       </HeaderItemsConteiner>
     </header>
