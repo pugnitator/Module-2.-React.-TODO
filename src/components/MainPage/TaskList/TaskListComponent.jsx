@@ -5,33 +5,27 @@ import { Loader } from "../../Loader.jsx";
 import { useEffect } from "react";
 import { fetchTaskList } from "../../../reduxTK/asyncActions/fetchTaskList.js";
 
-
 export function TaskList() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('useEffect')
+    console.log("useEffect");
     dispatch(fetchTaskList());
   }, []);
 
-  const taskListStore = useSelector(state => state.task);
-  const {isLoaded, currentTaskList} = taskListStore;
+  const taskListStore = useSelector((state) => state.task);
+  const { isLoaded, currentTaskList } = taskListStore;
   // console.log('taskListComponent', currentTaskList, isLoaded);
 
   return isLoaded ? (
     <List>
       {currentTaskList.map((item) => (
-            <Task
-              task={item}
-              key={item.id}
-              id={item.id}
-              title={item.title}
-            ></Task>
+        <Task task={item} key={item.id} id={item.id} title={item.title} />
       ))}
     </List>
   ) : (
     <Loader />
-  )
+  );
 }
 
 const List = styled.ul`

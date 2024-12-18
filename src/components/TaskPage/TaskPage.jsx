@@ -1,17 +1,17 @@
 import { useParams } from "react-router-dom";
-import { useContext } from "react";
-import { TodoListContext } from "../../todoListContext";
 import { NotLoadedTask } from "./NotLoadedTask";
 import { LoadedTask } from "./LoadedTask";
 import styled from "styled-components";
 import { GoBackButton } from "./GoBackButton";
 import { ErrorPage } from "../ErrorPage";
+import { useSelector } from "react-redux";
 
 export function TaskPage() {
   const params = useParams();
   const taskId = params.taskId;
-  const todoListStore = useContext(TodoListContext);
-  const taskList = todoListStore.taskList;
+
+  const taskListStore = useSelector((state) => state.task);
+  const taskList = taskListStore.currentTaskList;
 
   try {
     const currentTask = taskList?.find((task) => {

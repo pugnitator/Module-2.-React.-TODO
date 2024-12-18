@@ -30,23 +30,6 @@ export const useTodoList = () => {
     setIsSorted(!isSorted)
   };
 
-  async function addTask() {
-    const taskTitle = prompt("Опишите задачу");
-    if (taskTitle) {
-      try {
-        const task = {
-          id: Date.now().toString(),
-          title: taskTitle,
-          complited: false,
-        };
-        const isSuccess = await addTaskToServer(task);
-        if (isSuccess) setTaskList([...taskList, task]);
-      } catch (error) {
-        console.log("ne ok", error);
-      }
-    }
-  }
-
   async function deleteTask(taskId) {
     try {
       const isSuccess = await deleteTaskFromServer(taskId);

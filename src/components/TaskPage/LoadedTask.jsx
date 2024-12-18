@@ -4,6 +4,7 @@ import { TaskButtons } from "../MainPage/TaskList/TaskButtonsComponent";
 import { useContext } from "react";
 import { TodoListContext } from "../../todoListContext";
 import { shortenTitle } from "../../shortenTitleFun";
+import { useSelector } from "react-redux";
 
 export function LoadedTask(props) {
   const { id, title, complited } = props;
@@ -11,7 +12,9 @@ export function LoadedTask(props) {
   const [inputValue, setInputValue] = useState(title);
   const [isEdited, setIsEdited] = useState(false);
   const taskInputRef = useRef();
+
   const todoListStore = useContext(TodoListContext);
+  const taskListStore = useSelector((state) => state.task);
 
   useEffect(() => {
     if (isEdited && taskInputRef?.current?.disabled === false) {

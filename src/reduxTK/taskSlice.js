@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchTaskList } from "./asyncActions/fetchTaskList";
+import { addTask } from "./asyncActions/addTask";
 
 const taskSlice = createSlice({
   name: "tasks",
@@ -32,6 +33,7 @@ const taskSlice = createSlice({
   },
 
   extraReducers: (builder) => {
+    //fetchTaskList
     builder
     .addCase(fetchTaskList.pending, (state) => {
       state.isLoaded = false;
@@ -43,6 +45,15 @@ const taskSlice = createSlice({
     .addCase(fetchTaskList.rejected, (state, action) => {
       console.log(action.payload);
       state.isLoaded = false;
+    });
+
+    //addTask
+    builder
+    .addCase(addTask.fulfilled, (state, action) => {
+      state.currentTaskList.push(action.payload);
+    })
+    .addCase(addTask.rejected, (action) => {
+      console.log('addTaskError', action.payload);
     });
   },
 });
