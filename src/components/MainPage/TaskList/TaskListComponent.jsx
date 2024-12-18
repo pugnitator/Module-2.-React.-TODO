@@ -1,15 +1,26 @@
 import { styled } from "styled-components";
 import { Task } from "./TaskComponent.jsx";
-import { useContext } from "react";
-import { TodoListContext } from "../../../todoListContext.js";
+import { useDispatch, useSelector } from "react-redux";
+import { Loader } from "../../Loader.jsx";
+import { useEffect } from "react";
+import { fetchTaskList } from "../../../reduxTK/asyncActions/fetchTaskList.js";
+
 
 export function TaskList() {
-  const todoListStore = useContext(TodoListContext);
-  console.log(todoListStore.taskList);
+  const dispatch = useDispatch();
 
-  return (
+  useEffect(() => {
+    console.log('useEffect')
+    dispatch(fetchTaskList());
+  }, []);
+
+  const taskListStore = useSelector(state => state.task);
+  const {isLoaded, currentTaskList} = taskListStore;
+  // console.log('taskListComponent', currentTaskList, isLoaded);
+
+  return isLoaded ? (
     <List>
-      {todoListStore.taskList?.map((item) => (
+      {currentTaskList.map((item) => (
             <Task
               task={item}
               key={item.id}
@@ -18,7 +29,9 @@ export function TaskList() {
             ></Task>
       ))}
     </List>
-  );
+  ) : (
+    <Loader />
+  )
 }
 
 const List = styled.ul`
