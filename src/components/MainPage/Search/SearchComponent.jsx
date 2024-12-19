@@ -7,6 +7,9 @@ import { TodoListContext } from "../../../todoListContext";
 
 export function SearchBar() {
   const {searchTask, cancelSearchTask, sortTasksByTitle, isSorted} = useContext(TodoListContext);
+
+  // const taskListStore = useSelector((state) => state.task);
+  
   const [isSearch, setIsSearch] = useState(false)
   const input = useRef()
 

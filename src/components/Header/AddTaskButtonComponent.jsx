@@ -1,14 +1,23 @@
-import { styled } from 'styled-components';
-import { palette } from "../../colors"; 
-import { useContext } from 'react';
-import { TodoListContext } from '../../todoListContext';
+import { styled } from "styled-components";
+import { palette } from "../../colors";
+import { useDispatch } from "react-redux";
+import { addTask } from "../../reduxTK/asyncActions/addTask";
 
 export function AddTaskButton() {
-  const todoListStore = useContext(TodoListContext)
-    // const { addTask } = useTodoList();
-    return (
-        <AddButton onClick={todoListStore.addTask}>+ Новая задача</AddButton>
-    )
+  const dispatch = useDispatch();
+  const onClick = () => {
+    const taskTitle = prompt("Опишите задачу");
+    if (taskTitle) {
+      const task = {
+        id: Date.now().toString(),
+        title: taskTitle,
+        complited: false,
+      };
+      dispatch(addTask(task));
+    }
+  };
+
+  return <AddButton onClick={onClick}>+ Новая задача</AddButton>;
 }
 
 const AddButton = styled.button`
@@ -22,6 +31,6 @@ const AddButton = styled.button`
   border-radius: 3px;
 
   &:hover {
-    background-color: #AB8FEB;
+    background-color: #ab8feb;
   }
-`
+`;
