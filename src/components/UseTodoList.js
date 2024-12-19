@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { getTasksList } from "../APIs/getTaskList";
-import { addTaskToServer } from "../APIs/addTaskToServer";
 import { deleteTaskFromServer } from "../APIs/deleteTaskFromServer";
 import { editTaskOnServer } from "../APIs/editTaskOnServer";
 
@@ -9,9 +8,9 @@ export const useTodoList = () => {
   const [taskList, setTaskList] = useState([]);
   const [isSorted, setIsSorted] = useState(false);
 
-  useEffect(() => {
-    getTasksList().then(setTaskList);
-  }, []);
+  // useEffect(() => {
+  //   getTasksList().then(setTaskList);
+  // }, []);
 
   const searchTask = (text) => {
     setSearch(text.toLowerCase());
@@ -30,38 +29,34 @@ export const useTodoList = () => {
     setIsSorted(!isSorted)
   };
 
-  async function deleteTask(taskId) {
-    try {
-      const isSuccess = await deleteTaskFromServer(taskId);
-      if (isSuccess) {
-        setTaskList(taskList.filter(task => task.id !== taskId));
-      }
-    } catch (error) {
-      console.log("ошибка удаления", error);
-    }
-  }
+  // async function deleteTask(taskId) {
+  //   try {
+  //     const isSuccess = await deleteTaskFromServer(taskId);
+  //     if (isSuccess) {
+  //       setTaskList(taskList.filter(task => task.id !== taskId));
+  //     }
+  //   } catch (error) {
+  //     console.log("ошибка удаления", error);
+  //   }
+  // }
 
-  async function saveEditedTask(taskId, taskTitle) {
-    const task = {
-      id: taskId,
-      title: taskTitle,
-      complited: false,
-    };
+  // async function saveEditedTask(taskId, taskTitle) {
+  //   const task = {
+  //     id: taskId,
+  //     title: taskTitle,
+  //     complited: false,
+  //   };
 
-    try {
-      await editTaskOnServer(task, taskId);
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  //   try {
+  //     await editTaskOnServer(task, taskId);
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   return {
     taskList : applyFilters(),
     isSorted,
-    setTaskList,
-    addTask,
-    deleteTask,
-    saveEditedTask,
     searchTask,
     cancelSearchTask,
     sortTasksByTitle,

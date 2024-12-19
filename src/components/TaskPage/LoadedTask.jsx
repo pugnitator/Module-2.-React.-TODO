@@ -1,20 +1,17 @@
 import { useState, useRef, useEffect } from "react";
 import { styled } from "styled-components";
 import { TaskButtons } from "../MainPage/TaskList/TaskButtonsComponent";
-import { useContext } from "react";
-import { TodoListContext } from "../../todoListContext";
 import { shortenTitle } from "../../shortenTitleFun";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { editTask } from "../../reduxTK/asyncActions/editTask";
+import { deleteTask } from "../../reduxTK/asyncActions/deleteTask";
 
 export function LoadedTask(props) {
-  const { id, title, complited } = props;
-
+  const {id, title, complited} = props;
   const [inputValue, setInputValue] = useState(title);
   const [isEdited, setIsEdited] = useState(false);
   const taskInputRef = useRef();
-
-  const todoListStore = useContext(TodoListContext);
-  const taskListStore = useSelector((state) => state.task);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isEdited && taskInputRef?.current?.disabled === false) {
@@ -32,48 +29,52 @@ export function LoadedTask(props) {
   };
 
   const onDelete = () => {
-    todoListStore.deleteTask(id);
+    dispatch(deleteTask(id));
   };
 
   const onSaveClick = () => {
-    todoListStore.saveEditedTask(id, inputValue);
+    const task = {
+      id: id,
+      title: inputValue,
+      complited: complited,
+    };
+    dispatch(editTask(task));
     setIsEdited(false);
   };
 
   return (
     <TaskContainer>
-    <h3>Задача "{shortenTitle(title)}"</h3>
-    <Task>
-      <TaskInput
-        type="text"
-        ref={taskInputRef}
-        value={inputValue}
-        disabled={!isEdited}
-        onChange={(e) => setInputValue(e.target.value)}
-      />
-      <p>id: {id}</p>
-      <p>
-        Статус: {complited === false ? "Ожидает выполнения" : "Выполнена"}
-      </p>
-      <TaskButtons
+      <h3>Задача "{shortenTitle(title)}"</h3>
+      <Task>
+        <TaskInput
+          type="text"
+          ref={taskInputRef}
+          value={inputValue}
+          disabled={!isEdited}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+        <p>id: {id}</p>
+        <p>
+          Статус: {complited === false ? "Ожидает выполнения" : "Выполнена"}
+        </p>
+        <TaskButtons
           onDelete={onDelete}
           onEditClick={onEditClick}
           onSaveClick={onSaveClick}
           onCancelClick={onCancelClick}
           isEdited={isEdited}
         />
-    </Task>
-  </TaskContainer>
-  )
-
+      </Task>
+    </TaskContainer>
+  );
 }
 
-const TaskContainer=styled.div`
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    padding: 10px;
-`
+const TaskContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding: 10px;
+`;
 
 const Task = styled.div`
   display: flex;

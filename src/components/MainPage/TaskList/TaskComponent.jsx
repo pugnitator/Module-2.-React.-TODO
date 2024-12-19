@@ -7,6 +7,7 @@ import Open from "./Open.svg";
 
 export function Task(props) {
   const { id, title } = props;
+  console.log('taskComponent', title)
 
   return (
     <ListItem>
