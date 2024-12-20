@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { styled } from "styled-components";
 import { TaskButtons } from "../MainPage/TaskList/TaskButtonsComponent";
-import { shortenTitle } from "../../shortenTitleFun";
+import { shortenTitle } from "../helpFun";
 import { useDispatch } from "react-redux";
 import { editTask } from "../../reduxTK/asyncActions/editTask";
 import { deleteTask } from "../../reduxTK/asyncActions/deleteTask";

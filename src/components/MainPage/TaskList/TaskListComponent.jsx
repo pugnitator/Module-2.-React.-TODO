@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Loader } from "../../Loader.jsx";
 import { useEffect } from "react";
 import { fetchTaskList } from "../../../reduxTK/asyncActions/fetchTaskList.js";
+import { applyFilters } from "../../helpFun.js";
 
 export function TaskList() {
   const dispatch = useDispatch();
@@ -13,9 +14,12 @@ export function TaskList() {
     dispatch(fetchTaskList());
   }, []);
 
-  const taskListStore = useSelector((state) => state.task);
-  const { isLoaded, currentTaskList } = taskListStore;
-  // console.log('taskListComponent', currentTaskList, isLoaded);
+  const isLoaded = useSelector((state) => state.task.isLoaded);
+  const isSorted = useSelector((state) => state.task.isSorted);
+  const searchQuery = useSelector((state) => state.task.searchQuery);
+  const currentTaskList = useSelector((state) => {
+    return applyFilters(isSorted, searchQuery, state.task.currentTaskList);
+  });
 
   return isLoaded ? (
     <List>

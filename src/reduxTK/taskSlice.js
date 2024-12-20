@@ -9,76 +9,70 @@ const taskSlice = createSlice({
   initialState: {
     currentTaskList: [],
     isLoaded: false,
-    isUploaded: false,
+    isSorted: false,
+    searchQuery: "",
   },
 
   reducers: {
-    setTaskList(state, action) {
-      state.currentTaskList = action.payload;
+    setIsSorted(state, action) {
+      state.isSorted = action.payload;
     },
-    setIsListUploaded(state, action) {
-      state.isUploaded = action.payload
+    setSearchQuery(state, action) {
+      state.searchQuery = action.payload.toLowerCase();
     },
-    addTask(state, action) {
-      state.currentTaskList.push(action.payload);
-    },
-    editTask(state, action) {
-      const { taskId, newText } = action.payload;
-      const task = state.currentTaskList.find(item => item.id = taskId);
-      task.title = newText;
-    },
-    deleteTask(state, action) {
-      state.currentTaskList = state.currentTaskList.filter(
-        (task) => task.id !== action.payload
-      );
+    clearSearchQuery(state) {
+      state.searchQuery = "";
     },
   },
 
   extraReducers: (builder) => {
     //fetchTaskList
     builder
-    .addCase(fetchTaskList.pending, (state) => {
-      state.isLoaded = false;
-    })
-    .addCase(fetchTaskList.fulfilled, (state, action) => {
-      state.currentTaskList = action.payload;
-      state.isLoaded = true;
-    })
-    .addCase(fetchTaskList.rejected, (state, action) => {
-      console.log(action.payload);
-      state.isLoaded = false;
-    });
+      .addCase(fetchTaskList.pending, (state) => {
+        state.isLoaded = false;
+      })
+      .addCase(fetchTaskList.fulfilled, (state, action) => {
+        state.currentTaskList = action.payload;
+        state.isLoaded = true;
+      })
+      .addCase(fetchTaskList.rejected, (state, action) => {
+        console.log(action.payload);
+        state.isLoaded = false;
+      });
 
-    //addTask
     builder
-    .addCase(addTask.fulfilled, (state, action) => {
-      state.currentTaskList.push(action.payload);
-    })
-    .addCase(addTask.rejected, (action) => {
-      console.log('addTaskError', action.payload);
-    })
+      //addTask
+      .addCase(addTask.fulfilled, (state, action) => {
+        state.currentTaskList.push(action.payload);
+      })
+      .addCase(addTask.rejected, (action) => {
+        console.log("addTaskError", action.payload);
+      })
 
-    //deleteTask
-    .addCase(deleteTask.fulfilled, (state, action) => {
-      state.currentTaskList = state.currentTaskList.filter(task => task.id !== action.payload);
-    })
-    .addCase(deleteTask.rejected, (action) => {
-      console.log('deleteTaskError', action.payload);
-    })
+      //deleteTask
+      .addCase(deleteTask.fulfilled, (state, action) => {
+        state.currentTaskList = state.currentTaskList.filter(
+          (task) => task.id !== action.payload
+        );
+      })
+      .addCase(deleteTask.rejected, (action) => {
+        console.log("deleteTaskError", action.payload);
+      })
 
-    //editTask
-    .addCase(editTask.fulfilled, (state, action) => {
-      const editedTask = action.payload;
-      console.log('payload', editedTask);
-      const taskIndex = state.currentTaskList.findIndex(item => item.id = editedTask.id);
-      state.currentTaskList[taskIndex] = editedTask;      
-    })
-    .addCase(editTask.rejected, (action) => {
-      console.log('editTaskError', action.payload);
-    });
+      //editTask
+      .addCase(editTask.fulfilled, (state, action) => {
+        const editedTask = action.payload;
+        console.log("payload", editedTask);
+        const taskIndex = state.currentTaskList.findIndex(
+          (item) => (item.id = editedTask.id)
+        );
+        state.currentTaskList[taskIndex] = editedTask;
+      })
+      .addCase(editTask.rejected, (action) => {
+        console.log("editTaskError", action.payload);
+      });
   },
 });
-
 
 export const taskSliceActions = taskSlice.actions;
 export const taskReducer = taskSlice.reducer;
