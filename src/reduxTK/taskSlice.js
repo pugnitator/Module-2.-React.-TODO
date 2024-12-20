@@ -52,7 +52,7 @@ const taskSlice = createSlice({
       //deleteTask
       .addCase(deleteTask.fulfilled, (state, action) => {
         state.currentTaskList = state.currentTaskList.filter(
-          (task) => task.id !== action.payload
+          (task) => task.id !== action.payload.id
         );
       })
       .addCase(deleteTask.rejected, (action) => {

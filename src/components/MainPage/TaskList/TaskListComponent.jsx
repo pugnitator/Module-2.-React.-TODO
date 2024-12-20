@@ -8,18 +8,19 @@ import { applyFilters } from "../../helpFun.js";
 
 export function TaskList() {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.log("useEffect");
-    dispatch(fetchTaskList());
-  }, []);
-
   const isLoaded = useSelector((state) => state.task.isLoaded);
   const isSorted = useSelector((state) => state.task.isSorted);
   const searchQuery = useSelector((state) => state.task.searchQuery);
   const currentTaskList = useSelector((state) => {
     return applyFilters(isSorted, searchQuery, state.task.currentTaskList);
   });
+
+  useEffect(() => {
+    console.log("useEffect");
+    if (!isLoaded)dispatch(fetchTaskList());
+  }, []);
+
+  console.log('taskListComponent', currentTaskList);
 
   return isLoaded ? (
     <List>
