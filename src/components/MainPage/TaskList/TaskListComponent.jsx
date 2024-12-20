@@ -1,23 +1,35 @@
 import { styled } from "styled-components";
 import { Task } from "./TaskComponent.jsx";
-import { useContext } from "react";
-import { TodoListContext } from "../../../todoListContext.js";
+import { useDispatch, useSelector } from "react-redux";
+import { Loader } from "../../Loader.jsx";
+import { useEffect } from "react";
+import { fetchTaskList } from "../../../reduxTK/asyncActions/fetchTaskList.js";
+import { applyFilters } from "../../helpFun.js";
 
 export function TaskList() {
-  const todoListStore = useContext(TodoListContext);
-  console.log(todoListStore.taskList);
+  const dispatch = useDispatch();
+  const isLoaded = useSelector((state) => state.task.isLoaded);
+  const isSorted = useSelector((state) => state.task.isSorted);
+  const searchQuery = useSelector((state) => state.task.searchQuery);
+  const currentTaskList = useSelector((state) => {
+    return applyFilters(isSorted, searchQuery, state.task.currentTaskList);
+  });
 
-  return (
+  useEffect(() => {
+    console.log("useEffect");
+    if (!isLoaded)dispatch(fetchTaskList());
+  }, []);
+
+  console.log('taskListComponent', currentTaskList);
+
+  return isLoaded ? (
     <List>
-      {todoListStore.taskList?.map((item) => (
-            <Task
-              task={item}
-              key={item.id}
-              id={item.id}
-              title={item.title}
-            ></Task>
+      {currentTaskList.map((item) => (
+        <Task task={item} key={item.id} id={item.id} title={item.title} />
       ))}
     </List>
+  ) : (
+    <Loader />
   );
 }
 

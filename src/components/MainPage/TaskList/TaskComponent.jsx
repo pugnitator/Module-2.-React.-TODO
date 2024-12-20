@@ -2,7 +2,7 @@ import { React } from "react";
 import { styled } from "styled-components";
 import { palette } from "../../../colors";
 import { StyledLink } from "../../../colors";
-import { shortenTitle } from "../../../shortenTitleFun";
+import { shortenTitle } from "../../helpFun";
 import Open from "./Open.svg";
 
 export function Task(props) {
