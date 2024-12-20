@@ -10,12 +10,10 @@ export function TaskPage() {
   const params = useParams();
   const taskId = params.taskId;
 
-  const taskListStore = useSelector((state) => state.task);
-  const taskList = taskListStore.currentTaskList;
+  const taskList = useSelector((state) => state.task.currentTaskList);
 
   try {
     const currentTask = taskList?.find((task) => {
-      console.log(task.id === taskId, task.id, taskId);
       return task.id === taskId;
     });
 

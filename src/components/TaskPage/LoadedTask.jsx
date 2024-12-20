@@ -5,13 +5,16 @@ import { shortenTitle } from "../helpFun";
 import { useDispatch } from "react-redux";
 import { editTask } from "../../reduxTK/asyncActions/editTask";
 import { deleteTask } from "../../reduxTK/asyncActions/deleteTask";
+import { useNavigate } from "react-router-dom";
 
 export function LoadedTask(props) {
-  const {id, title, complited} = props;
+  const { id, title, complited } = props;
   const [inputValue, setInputValue] = useState(title);
+  const [isDeleted, setIsDeleted] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
   const taskInputRef = useRef();
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (isEdited && taskInputRef?.current?.disabled === false) {
@@ -19,17 +22,9 @@ export function LoadedTask(props) {
     }
   }, [isEdited]);
 
-  const onEditClick = () => {
-    setIsEdited(true);
-  };
-
   const onCancelClick = () => {
     setIsEdited(false);
     setInputValue(title);
-  };
-
-  const onDelete = () => {
-    dispatch(deleteTask(id));
   };
 
   const onSaveClick = () => {
@@ -41,6 +36,13 @@ export function LoadedTask(props) {
     dispatch(editTask(task));
     setIsEdited(false);
   };
+
+  const onDeleteClick = () => {
+    dispatch(deleteTask(id));
+    setIsDeleted(true);
+  }
+
+  if (isDeleted) navigate('/')
 
   return (
     <TaskContainer>
@@ -58,8 +60,8 @@ export function LoadedTask(props) {
           Статус: {complited === false ? "Ожидает выполнения" : "Выполнена"}
         </p>
         <TaskButtons
-          onDelete={onDelete}
-          onEditClick={onEditClick}
+          onDelete={onDeleteClick}
+          onEditClick={() => setIsEdited(true)}
           onSaveClick={onSaveClick}
           onCancelClick={onCancelClick}
           isEdited={isEdited}
