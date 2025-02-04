@@ -3,7 +3,7 @@ export async function deleteTaskFromServer(taskId) {
     if (taskId) {
       try {
         const rawResponse = await fetch(
-            `http://localhost:3004/todos/${taskId}`,
+            `https://module-2-react-todo-lb0pjrjz8-pugnitators-projects.vercel.app/todos/${taskId}`,
             {
               method: "DELETE",
             }

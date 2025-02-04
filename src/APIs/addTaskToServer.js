@@ -4,7 +4,7 @@ export async function addTaskToServer(task) {
   let result = false;
   if (task) {
     try {
-      const rawResponse = await fetch("http://localhost:3004/todos", {
+      const rawResponse = await fetch("https://module-2-react-todo-lb0pjrjz8-pugnitators-projects.vercel.app/todos", {
         method: "POST",
         body: JSON.stringify(task),
         headers: {

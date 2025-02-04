@@ -9,8 +9,5 @@
 - json-server
 - Styled-component
 
-## Установка
-1. Клонируйте репозиторий;
-2. Установите зависимости: ```npm install```;
-3. Запустите json-server на 3004 порте: ```json-server --watch db.json --port 3004```;
-4. Запустите проект: ```npm start```;
+## Просмотр
+https://module-2-react-todo-lb0pjrjz8-pugnitators-projects.vercel.app/

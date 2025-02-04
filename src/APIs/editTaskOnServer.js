@@ -2,7 +2,7 @@ export async function editTaskOnServer(task, taskId) {
     let result = false
     console.log(task, taskId)
       try {
-        const rawResponse = await fetch(`http://localhost:3004/todos/${+taskId}`, {
+        const rawResponse = await fetch(`https://module-2-react-todo-lb0pjrjz8-pugnitators-projects.vercel.app/todos/${+taskId}`, {
             method: "PUT",
             body: JSON.stringify(task),
             headers: {
