@@ -1,15 +1,12 @@
-import { styled } from 'styled-components';
-import { palette } from "../../colors"; 
-import { useContext } from 'react';
-import { TodoListContext } from '../../todoListContext';
+import { styled } from "styled-components";
+import { palette } from "../../colors";
+import { useContext } from "react";
+import { TodoListContext } from "../../todoListContext";
 
 export function AddTaskButton() {
-  const todoListStore = useContext(TodoListContext)
-    // const { addTask } = useTodoList();
-    return (
-        <AddButton onClick={todoListStore.addTask}>+ Новая задача</AddButton>
-    )
-}
+  const addTask = useContext(TodoListContext.addTask);
+  return <AddButton onClick={addTask}>+ Новая задача</AddButton>;
+};
 
 const AddButton = styled.button`
   margin: 0;
@@ -22,6 +19,6 @@ const AddButton = styled.button`
   border-radius: 3px;
 
   &:hover {
-    background-color: #AB8FEB;
+    background-color: #ab8feb;
   }
-`
+`;

@@ -7,8 +7,8 @@ import { TodoListContext } from "../../../todoListContext";
 
 export function SearchBar() {
   const {searchTask, cancelSearchTask, sortTasksByTitle, isSorted} = useContext(TodoListContext);
-  const [isSearch, setIsSearch] = useState(false)
-  const input = useRef()
+  const [isSearch, setIsSearch] = useState(false);
+  const input = useRef();
 
   const onClickSearch = () => {
     if (input.current.value) {
@@ -22,12 +22,12 @@ export function SearchBar() {
     if(isSearch) cancelSearchTask();
     input.current.value = '';
     setIsSearch(false);
-  }
+  };
 
   const onClicSortByTitle = () => {
     console.log('isSorted', isSorted);
     sortTasksByTitle();
-  }
+  };
 
   return (
     <div style={
@@ -52,7 +52,7 @@ export function SearchBar() {
     </SearchBarConteiner>
     </div>
   );
-}
+};
 
 const SearchBarConteiner = styled.div`
   margin: 0;
@@ -66,7 +66,7 @@ const SearchBarConteiner = styled.div`
 const SearchInput = styled.input`
   flex-grow: 1;
   type="text";
-`
+`;
 
 const Button = styled.button`
   box-sizing: content-box;
@@ -88,11 +88,11 @@ const SearchImage = styled.img`
   box-sizing: border-box;
   width: 18px;
   height: 18px;
-`
+`;
 
 const SortImg = styled.img`
   box-sizing: border-box;
   width: 10px;
   height: 5px;
   rotate: ${(props) => props.isSorted === true ? '180deg' : '0deg'}
-`
+`;

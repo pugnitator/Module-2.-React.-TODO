@@ -39,38 +39,37 @@ export function LoadedTask(props) {
 
   return (
     <TaskContainer>
-    <h3>Задача "{shortenTitle(title)}"</h3>
-    <Task>
-      <TaskInput
-        type="text"
-        ref={taskInputRef}
-        value={inputValue}
-        disabled={!isEdited}
-        onChange={(e) => setInputValue(e.target.value)}
-      />
-      <p>id: {id}</p>
-      <p>
-        Статус: {complited === false ? "Ожидает выполнения" : "Выполнена"}
-      </p>
-      <TaskButtons
+      <h3>Задача "{shortenTitle(title)}"</h3>
+      <Task>
+        <TaskInput
+          type="text"
+          ref={taskInputRef}
+          value={inputValue}
+          disabled={!isEdited}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+        <p>id: {id}</p>
+        <p>
+          Статус: {complited === false ? "Ожидает выполнения" : "Выполнена"}
+        </p>
+        <TaskButtons
           onDelete={onDelete}
           onEditClick={onEditClick}
           onSaveClick={onSaveClick}
           onCancelClick={onCancelClick}
           isEdited={isEdited}
         />
-    </Task>
-  </TaskContainer>
-  )
+      </Task>
+    </TaskContainer>
+  );
+};
 
-}
-
-const TaskContainer=styled.div`
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    padding: 10px;
-`
+const TaskContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding: 10px;
+`;
 
 const Task = styled.div`
   display: flex;
