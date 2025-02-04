@@ -10,16 +10,11 @@ export function TaskList() {
   return (
     <List>
       {todoListStore.taskList?.map((item) => (
-            <Task
-              task={item}
-              key={item.id}
-              id={item.id}
-              title={item.title}
-            ></Task>
+        <Task task={item} key={item.id} id={item.id} title={item.title}></Task>
       ))}
     </List>
   );
-}
+};
 
 const List = styled.ul`
   margin: auto;

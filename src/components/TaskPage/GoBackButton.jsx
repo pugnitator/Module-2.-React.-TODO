@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 export function GoBackButton() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return <BackButton onClick={() => navigate(-1)}>{"<-- назад"}</BackButton>;
 }

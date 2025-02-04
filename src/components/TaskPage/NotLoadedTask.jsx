@@ -1,5 +1,3 @@
 export function NotLoadedTask() {
-    return (
-        <p>Идет загрузка</p>
-    )
-}
+  return <p>Идет загрузка</p>;
+};

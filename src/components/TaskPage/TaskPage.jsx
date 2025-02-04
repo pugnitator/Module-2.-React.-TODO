@@ -24,17 +24,20 @@ export function TaskPage() {
     return (
       <TaskPageContainer>
         <GoBackButton />
-        {currentTask ? 
+        {currentTask ? (
           <LoadedTask id={taskId} title={title} complited={complited} />
-         : taskId ? <ErrorPage /> : <NotLoadedTask />
-        }
+        ) : taskId ? (
+          <ErrorPage />
+        ) : (
+          <NotLoadedTask />
+        )}
       </TaskPageContainer>
     );
   } catch (error) {
     console.log(error);
     return <ErrorPage />;
   }
-}
+};
 
 const TaskPageContainer = styled.div`
   display: flex;

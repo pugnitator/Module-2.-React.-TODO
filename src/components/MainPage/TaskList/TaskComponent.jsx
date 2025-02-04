@@ -14,7 +14,7 @@ export function Task(props) {
         <img src={Open} alt="open task" />
       </StyledLink>
       <TaskInfo>
-        <h4>{ shortenTitle(title) }</h4>
+        <h4>{shortenTitle(title)}</h4>
         <Id>{`id: ${id}`}</Id>
       </TaskInfo>
     </ListItem>
